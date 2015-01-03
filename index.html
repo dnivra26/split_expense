@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html ng-app="split_expense">
 	<head>
-		<link rel="stylesheet" type="text/css" href="bootstrap.min.js">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	</head>
 	<body>
 		<script type="text/javascript" src="angular.min.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 
-		<h1> SPLIT EM ALL </h1>
+		<div class="jumbotron">
+  			<center><h1>Split em All!!</h1></center>
+  		</div>
+  		
+		<!--<h1> SPLIT EM ALL </h1>-->
 		<div ng-controller="UserController">	
-			<h3>Members</h3>	
-			<ol>
-				<li ng-repeat="user in users">{{user.name}}</li>
-			</ol>
+			
 
-			<form ng-submit="createUser(newUser)">
-				<input type="text" ng-model="newUser.name">
-				<input type="submit" value="Add Member">
+			<form ng-submit="createUser(newUser)" role="form" class="col-lg-4">
+			<h3>Members</h3>	
+
+			<ul>
+				<li ng-repeat="user in users" >{{user.name}}</li>
+			</ul>
+				<input type="text" ng-model="newUser.name" class="form-control" placeholder="name">
+				<button type="submit" class="btn btn-primary">Add Member</button>
 			</form>
 		
+			
+			<form ng-submit="createExpense(newExpense)" role="form">
 			<h3>Expenses</h3>
-			<ol>
-				<li ng-repeat="expense in expenses">{{expense.spent_by}} spent {{expense.amount}} with {{expense.spent_with}} for {{expense.spent_for}} </li>
+
+			<ol >
+				<li ng-repeat="expense in expenses" >{{expense.spent_by}} spent {{expense.amount}} with {{expense.spent_with}} for {{expense.spent_for}} </li>
 			</ol>
-			<form ng-submit="createExpense(newExpense)">
+
 				<p><select ng-model="newExpense.spent_by">
 					<option ng-repeat="user in users">{{user.name}}</option>
-				</select> spent <input type="text" ng-model="newExpense.amount"> with <select multiple ng-model="newExpense.spent_with">
+				</select> spent <input type="text" ng-model="newExpense.amount" class="form-control" placeholder="amount"> with <select multiple ng-model="newExpense.spent_with">
 					<option ng-repeat="user in users">{{user.name}}</option>
-				</select> for <input type="text" ng-model="newExpense.spent_for">
-				<input type="submit" value="Add Expense"></p>
-
-				
+				</select> for <input type="text" ng-model="newExpense.spent_for" class="form-control" placeholder="purpose">
+				<button type="submit" class="btn btn-primary">Add Expense</button>
 				
 			</form>
 		
-			<h3>Split</h3>
 			<form ng-submit="calculateSplit()">
-				<input type="submit" value="Calculate Split">
+				<button type="submit" class="btn btn-primary">Calculate Split</button>
 			</form>
 			<div id="output">
 			</div>
