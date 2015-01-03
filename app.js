@@ -37,8 +37,14 @@ app.controller("UserController",function($scope){
 
 	$scope.splits = {};
 	
+	function toTitleCase(str)
+	{
+    	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	}
 
 	function calculateSplit(){
+		var div = document.getElementById('output');
+
 
 		for(var i=0; i < $scope.expenses.length; i++){
 			var individual_split = {};
@@ -55,11 +61,21 @@ app.controller("UserController",function($scope){
 				 		else{
 				 			individual_split[$scope.expenses[i].spent_with[j]] += individual_amount;	
 				 		}
+
 			}
 			$scope.splits[$scope.expenses[i].spent_by] = individual_split;
 			
 		}
 
+		div.innerHTML += "<h3>Here you go...</h3><ul>"
+		for(var key in $scope.splits){
+			
+			var temp_map = $scope.splits[key];
+			for(var temp_key in temp_map){
+				div.innerHTML += "<li>"+toTitleCase(temp_key) + " owes " +toTitleCase(key)+ " Rs. " + temp_map[temp_key] + "</li>";
+			}
+		}
+		div.innerHTML += "</ul>"
 		console.log($scope.splits);
 	}
 
