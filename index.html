@@ -15,34 +15,41 @@
 		<div ng-controller="UserController">	
 			
 
-			<form ng-submit="createUser(newUser)" role="form" class="col-lg-4">
+			<form ng-submit="createUser(newUser)" role="form" class="col-lg-3">
 			<h3>Members</h3>	
 
 			<ul>
 				<li ng-repeat="user in users" >{{user.name}}</li>
 			</ul>
-				<input type="text" ng-model="newUser.name" class="form-control" placeholder="name">
+				<input type="text" ng-model="newUser.name" class="form-control" placeholder="name"><br>
 				<button type="submit" class="btn btn-primary">Add Member</button>
 			</form>
 		
 			
-			<form ng-submit="createExpense(newExpense)" role="form">
+			<form ng-submit="createExpense(newExpense)" role="form" class="col-lg-3">
 			<h3>Expenses</h3>
 
 			<ol >
 				<li ng-repeat="expense in expenses" >{{expense.spent_by}} spent {{expense.amount}} with {{expense.spent_with}} for {{expense.spent_for}} </li>
 			</ol>
+				<label for="spent_by">spent by:</label>
+				<p><select ng-model="newExpense.spent_by" id="spent_by">
+					<option ng-repeat="user in users">{{user.name}}</option>
+				</select><br> 
+				<label for="spent_amount">spent:</label>
 
-				<p><select ng-model="newExpense.spent_by">
+				<input type="text" ng-model="newExpense.amount" class="form-control" placeholder="amount" id="spent_amount"> 
+				<label for="spent_with">spent with:</label> 
+				<select multiple ng-model="newExpense.spent_with" id="spent_with">
 					<option ng-repeat="user in users">{{user.name}}</option>
-				</select> spent <input type="text" ng-model="newExpense.amount" class="form-control" placeholder="amount"> with <select multiple ng-model="newExpense.spent_with">
-					<option ng-repeat="user in users">{{user.name}}</option>
-				</select> for <input type="text" ng-model="newExpense.spent_for" class="form-control" placeholder="purpose">
+				</select><br> 
+				<label for="purpose">for:</label>
+				<input type="text" ng-model="newExpense.spent_for" class="form-control" placeholder="purpose" id="purpose"><br>
 				<button type="submit" class="btn btn-primary">Add Expense</button>
 				
 			</form>
 		
-			<form ng-submit="calculateSplit()">
+			<form ng-submit="calculateSplit()" role="form" class="col-lg-3">
 				<button type="submit" class="btn btn-primary">Calculate Split</button>
 			</form>
 			<div id="output">

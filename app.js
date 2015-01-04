@@ -48,6 +48,7 @@ app.controller("UserController",function($scope){
 
 		for(var i=0; i < $scope.expenses.length; i++){
 			var individual_split = {};
+			var temp_split = {};
 
 			if ($scope.splits[$scope.expenses[i].spent_by] != undefined ){
 				individual_split = $scope.splits[$scope.expenses[i].spent_by];	
@@ -56,7 +57,24 @@ app.controller("UserController",function($scope){
 			var individual_amount = $scope.expenses[i].amount / ( $scope.expenses[i].spent_with.length + 1 ) ;
 			for(var j=0; j<$scope.expenses[i].spent_with.length; j++){
 						if(individual_split[$scope.expenses[i].spent_with[j]] == undefined){
-				 			individual_split[$scope.expenses[i].spent_with[j]] = individual_amount;
+
+							if($scope.splits[$scope.expenses[i].spent_with[j]] != undefined){
+								temp_split = $scope.splits[$scope.expenses[i].spent_with[j]];
+								if(temp_split[$scope.expenses[i].spent_by] != undefined){
+									var temp_amount = temp_split[$scope.expenses[i].spent_by];
+									if(temp_amount > individual_amount){
+										//individual_split[$scope.expenses[i].spent_by] = (temp_amount - individual_amount);
+										temp_split[$scope.expenses[i].spent_by] = (temp_amount - individual_amount);
+									}else{
+										individual_split[$scope.expenses[i].spent_with[j]] = (individual_amount - temp_amount);
+									}
+								}else{
+									individual_split[$scope.expenses[i].spent_with[j]] = individual_amount;		
+								}
+							}else{
+								individual_split[$scope.expenses[i].spent_with[j]] = individual_amount;	
+							}
+				 			
 				 		}
 				 		else{
 				 			individual_split[$scope.expenses[i].spent_with[j]] += individual_amount;	
